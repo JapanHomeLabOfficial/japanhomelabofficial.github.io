@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Blog | Japan Home Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #fafafa;
+      color: #333;
+    }
+    header {
+      background: #111;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    article {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      border-bottom: 1px solid #ddd;
+    }
+    h2 {
+      margin-bottom: 10px;
+    }
+    a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Japan Home Lab Blog</h1>
+  <p>Community & Experiments</p>
+</header>
+
+<div id="posts"></div>
+
+<script>
+const API_KEY = "ここにmicroCMSのAPIキー";
+const ENDPOINT = "https://【サービスID】.microcms.io/api/v1/blog";
+
+fetch(ENDPOINT, {
+  headers: { "X-MICROCMS-API-KEY": API_KEY }
+})
+.then(res => res.json())
+.then(data => {
+  const posts = document.getElementById("posts");
+  data.contents.forEach(post => {
+    const article = document.createElement("article");
+    article.innerHTML = `
+      <h2>${post.title}</h2>
+      <div>${post.content}</div>
+    `;
+    posts.appendChild(article);
+  });
+});
+</script>
+
+</body>
+</html>
